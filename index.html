@@ -14,7 +14,7 @@
 </head>
 <body>
   <h1>Privacy Policy – Lexify</h1>
-  <p><em>Last updated: May 2025</em></p>
+  <p><em>Last updated: May 2026</em></p>
 
   <h2>Overview</h2>
   <p>Lexify is a Chrome Extension that helps users learn and retain vocabulary using spaced repetition. We are committed to protecting your privacy.</p>
@@ -23,6 +23,8 @@
   <ul>
     <li><strong>Email address</strong> – used to create and identify your account via Firebase Authentication.</li>
     <li><strong>Vocabulary cards</strong> – words, definitions, and review history that you create within the app, stored in Firebase Firestore.</li>
+    <li><strong>Selected text from webpages</strong> – when you highlight a word and use the right-click "Add to Lexify" context menu, that selected text is read locally to pre-fill the Add Card form. It is not transmitted to our servers.</li>
+    <li><strong>Gemini API key (optional)</strong> – if you choose to enable the AI sentence check feature, you may enter your own Google Gemini API key in Settings. This key is stored locally in <code>chrome.storage.sync</code> (synced across your Chrome-signed-in devices by Google) and is sent directly from your browser to Google's Generative Language API. It is never sent to or stored by us.</li>
   </ul>
 
   <h2>How We Use Your Data</h2>
@@ -33,6 +35,7 @@
     <li><strong>Firebase (Google)</strong> – authentication and database storage. Subject to <a href="https://firebase.google.com/support/privacy">Firebase Privacy Policy</a>.</li>
     <li><strong>Merriam-Webster API</strong> – fetching English word definitions. No personal data is sent.</li>
     <li><strong>Google Translate API</strong> – translating words to Vietnamese. No personal data is sent.</li>
+    <li><strong>Google Generative Language API (Gemini)</strong> – optional AI-powered grammar and spelling feedback on example sentences. Only called when you have entered your own Gemini API key in Settings. The request contains only the target word and the sentence you typed — no account information or personal data is sent. Subject to <a href="https://ai.google.dev/gemini-api/terms">Google Generative AI Terms</a>.</li>
   </ul>
 
   <h2>Data Retention & Deletion</h2>
