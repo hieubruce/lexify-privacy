@@ -7,41 +7,120 @@
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 700px; margin: 48px auto; padding: 0 24px; color: #1a1a1a; line-height: 1.7; }
     h1 { font-size: 1.8rem; margin-bottom: 4px; }
-    h2 { font-size: 1.1rem; margin-top: 32px; }
+    h2 { font-size: 1.1rem; margin-top: 36px; margin-bottom: 8px; }
+    h3 { font-size: 0.95rem; margin-top: 20px; margin-bottom: 4px; color: #222; }
     p, li { color: #444; }
+    table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 0.9rem; }
+    th { background: #f5f5f5; text-align: left; padding: 8px 12px; border: 1px solid #ddd; color: #222; }
+    td { padding: 8px 12px; border: 1px solid #ddd; color: #444; vertical-align: top; }
     em { color: #888; font-size: 0.9rem; }
+    code { background: #f5f5f5; padding: 1px 5px; border-radius: 3px; font-size: 0.85rem; }
   </style>
 </head>
 <body>
   <h1>Privacy Policy – Lexify</h1>
   <p><em>Last updated: May 2026</em></p>
 
-  <h2>Overview</h2>
-  <p>Lexify is a Chrome Extension that helps users learn and retain vocabulary using spaced repetition. We are committed to protecting your privacy.</p>
+  <h2>1. Overview</h2>
+  <p>Lexify is a Chrome Extension that helps users learn and retain English vocabulary using spaced repetition (FSRS algorithm). This policy explains what data we collect, why we collect it, how it is stored and processed, and who it is shared with.</p>
 
-  <h2>Data We Collect</h2>
+  <h2>2. Data We Collect</h2>
+
+  <table>
+    <tr>
+      <th>Data</th>
+      <th>How collected</th>
+      <th>Purpose</th>
+      <th>Where stored</th>
+    </tr>
+    <tr>
+      <td><strong>Email address</strong></td>
+      <td>Entered by the user during sign-up, or provided by Google during Google Sign-In</td>
+      <td>Account identification and authentication</td>
+      <td>Firebase Authentication (Google servers)</td>
+    </tr>
+    <tr>
+      <td><strong>Vocabulary cards</strong> (word, definition, Vietnamese translation, example sentence, phonetic, part of speech)</td>
+      <td>Created manually by the user via the Add Card form, or pre-filled from a dictionary/translation API after the user initiates a lookup</td>
+      <td>Core app functionality — storing and reviewing vocabulary</td>
+      <td>Firebase Firestore (Google servers)</td>
+    </tr>
+    <tr>
+      <td><strong>Review history</strong> (review timestamps, FSRS scheduling data, ratings)</td>
+      <td>Generated automatically when the user completes a review session</td>
+      <td>Spaced repetition scheduling — determining when each card is due next</td>
+      <td>Firebase Firestore (Google servers)</td>
+    </tr>
+    <tr>
+      <td><strong>App settings</strong> (dark mode, reminder time, deck names)</td>
+      <td>Set by the user in the Settings screen</td>
+      <td>Personalizing the app experience</td>
+      <td><code>chrome.storage.local</code> on the user's device; deck names also stored in Firebase Firestore</td>
+    </tr>
+    <tr>
+      <td><strong>Selected text from webpages</strong></td>
+      <td>When the user highlights a word on any webpage and clicks the "＋ Lexify" tooltip or uses the right-click "Add to Lexify" context menu</td>
+      <td>Pre-filling the Add Card form with the selected word — convenience only</td>
+      <td>Held in memory temporarily; never transmitted to our servers</td>
+    </tr>
+    <tr>
+      <td><strong>Gemini API key</strong> (optional)</td>
+      <td>Entered voluntarily by the user in Settings to enable AI sentence checking</td>
+      <td>Sent directly from the user's browser to Google's Generative Language API to check example sentences; never transmitted to or stored by us</td>
+      <td><code>chrome.storage.sync</code> — synced across the user's Chrome-signed-in devices by Google</td>
+    </tr>
+  </table>
+
+  <p>We do <strong>not</strong> collect: browsing history, page content, passwords, payment information, precise location, or any data beyond what is described above.</p>
+
+  <h2>3. How We Use Your Data</h2>
   <ul>
-    <li><strong>Email address</strong> – used to create and identify your account via Firebase Authentication.</li>
-    <li><strong>Vocabulary cards</strong> – words, definitions, and review history that you create within the app, stored in Firebase Firestore.</li>
-    <li><strong>Selected text from webpages</strong> – when you highlight a word and use the right-click "Add to Lexify" context menu, that selected text is read locally to pre-fill the Add Card form. It is not transmitted to our servers.</li>
-    <li><strong>Gemini API key (optional)</strong> – if you choose to enable the AI sentence check feature, you may enter your own Google Gemini API key in Settings. This key is stored locally in <code>chrome.storage.sync</code> (synced across your Chrome-signed-in devices by Google) and is sent directly from your browser to Google's Generative Language API. It is never sent to or stored by us.</li>
+    <li><strong>Authentication</strong> — your email is used solely to identify your account and authorize access to your vocabulary data.</li>
+    <li><strong>Sync</strong> — vocabulary cards and review history are synced to Firestore so your data is available across sessions and devices.</li>
+    <li><strong>Spaced repetition scheduling</strong> — review history is used locally by the FSRS algorithm to calculate the next due date for each card. This computation happens on-device.</li>
+    <li><strong>Dictionary lookups</strong> — when you add a card and click "Generate," the word you typed is sent to Merriam-Webster API and Google Translate API to fetch its definition and Vietnamese translation. No account information is included in these requests.</li>
+    <li><strong>Notifications</strong> — if you enable the daily reminder, your chosen reminder time is stored locally and used to schedule a Chrome alarm. The notification fires on-device; no data is sent to external servers for this purpose.</li>
+  </ul>
+  <p>We do <strong>not</strong> sell, rent, or share your personal data with any third party for advertising or marketing purposes.</p>
+
+  <h2>4. Data Storage and Retention</h2>
+  <ul>
+    <li><strong>Firebase (Google)</strong> — account and vocabulary data is stored on Google's servers in the Firebase platform. Data is retained for as long as your account exists.</li>
+    <li><strong>Local device storage</strong> — settings and auth tokens are stored in <code>chrome.storage.local</code> on your device. This data is cleared when you uninstall the extension or sign out.</li>
+    <li><strong>Deletion</strong> — to permanently delete your account and all associated data, contact us at the email below. We will process the request within 30 days.</li>
   </ul>
 
-  <h2>How We Use Your Data</h2>
-  <p>Your data is used exclusively to provide the Lexify service — authenticating your account and syncing your vocabulary cards across sessions. We do not sell, rent, or share your data with third parties.</p>
-
-  <h2>Third-Party Services</h2>
+  <h2>5. Data Sharing</h2>
+  <p>Your data is shared only with the following third-party services, strictly to provide the Lexify functionality:</p>
   <ul>
-    <li><strong>Firebase (Google)</strong> – authentication and database storage. Subject to <a href="https://firebase.google.com/support/privacy">Firebase Privacy Policy</a>.</li>
-    <li><strong>Merriam-Webster API</strong> – fetching English word definitions. No personal data is sent.</li>
-    <li><strong>Google Translate API</strong> – translating words to Vietnamese. No personal data is sent.</li>
-    <li><strong>Google Generative Language API (Gemini)</strong> – optional AI-powered grammar and spelling feedback on example sentences. Only called when you have entered your own Gemini API key in Settings. The request contains only the target word and the sentence you typed — no account information or personal data is sent. Subject to <a href="https://ai.google.dev/gemini-api/terms">Google Generative AI Terms</a>.</li>
+    <li><strong>Firebase Authentication &amp; Firestore (Google)</strong> — stores your account credentials and vocabulary data. Subject to <a href="https://firebase.google.com/support/privacy">Firebase Privacy Policy</a>.</li>
+    <li><strong>Merriam-Webster Learner's Dictionary API</strong> — receives the word you look up to return its English definition, phonetic, and example sentence. No personal data (account info, email, etc.) is included in these requests.</li>
+    <li><strong>Google Translate API</strong> — receives the word you look up to return its Vietnamese translation. No personal data is included.</li>
+    <li><strong>Google Generative Language API (Gemini)</strong> — optional. Only called if you have entered your own Gemini API key in Settings. Receives the target word and the example sentence you typed for grammar/spelling feedback. No account information is sent. Subject to <a href="https://ai.google.dev/gemini-api/terms">Google Generative AI Terms</a>.</li>
+  </ul>
+  <p>No data is shared with any other party.</p>
+
+  <h2>6. Permissions Justification</h2>
+  <ul>
+    <li><strong>storage</strong> — saves user settings, authentication tokens, and due card count locally on the device.</li>
+    <li><strong>alarms</strong> — schedules the daily review reminder notification.</li>
+    <li><strong>contextMenus</strong> — adds the "Add to Lexify" right-click option when text is selected on a webpage.</li>
+    <li><strong>identity</strong> — enables Google Sign-In via <code>chrome.identity.launchWebAuthFlow</code>.</li>
+    <li><strong>notifications</strong> — shows the daily reminder when review cards are due.</li>
+    <li><strong>sidePanel</strong> — displays the app as a side panel while the user browses.</li>
+    <li><strong>Host permissions</strong> (dictionaryapi.com, dictionaryapi.dev, translate.googleapis.com, firestore.googleapis.com, securetoken.googleapis.com, generativelanguage.googleapis.com, media.merriam-webster.com) — fetch word definitions, Vietnamese translations, audio pronunciations, and sync data with Firebase.</li>
   </ul>
 
-  <h2>Data Retention & Deletion</h2>
-  <p>Your data is stored as long as your account exists. To delete your data, contact us at the email below and we will remove it within 30 days.</p>
+  <h2>7. Content Script</h2>
+  <p>Lexify injects a small content script into all webpages (<code>http://*/*</code>, <code>https://*/*</code>). This script listens for text selections and displays a small "＋ Lexify" tooltip near the selected text. It does not read, record, or transmit page content, browsing history, or any other information from the pages you visit. Clicking the tooltip sends only the selected word to the extension's side panel.</p>
 
-  <h2>Contact</h2>
-  <p>Questions or requests: <a href="mailto:nguyendinhminhhieu0409@gmail.com">nguyendinhminhhieu0409@gmail.com</a></p>
+  <h2>8. Children's Privacy</h2>
+  <p>Lexify is not directed at children under 13. We do not knowingly collect personal information from children.</p>
+
+  <h2>9. Changes to This Policy</h2>
+  <p>We may update this policy as the extension evolves. The "Last updated" date at the top of this page will reflect any changes.</p>
+
+  <h2>10. Contact</h2>
+  <p>Questions, data deletion requests, or concerns: <a href="mailto:nguyendinhminhhieu0409@gmail.com">nguyendinhminhhieu0409@gmail.com</a></p>
 </body>
 </html>
